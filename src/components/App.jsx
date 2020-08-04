@@ -1,23 +1,20 @@
 import React, { useState } from "react";
+import TodoItem from "./ToDoItem";
 
 function App() {
-  //useState to hold user's input
-  const [userInput, setInput] = useState("");
-
-  //useState to hold in an Array, the user's input once button is clicked
-  const [arrayItem, setArray] = useState([]);
+  const [inputText, setInputText] = useState("");
+  const [items, setItems] = useState([]);
 
   function handleChange(event) {
-    //const to hold the user's input value
     const newValue = event.target.value;
-    setInput(newValue);
+    setInputText(newValue);
   }
 
-  function handleClick(event) {
-    setArray(prevItem => {
-      return [...prevItem, userInput];
+  function addItem() {
+    setItems(prevItems => {
+      return [...prevItems, inputText];
     });
-    setInput("");
+    setInputText("");
   }
 
   return (
@@ -25,18 +22,16 @@ function App() {
       <div className="heading">
         <h1>To-Do List</h1>
       </div>
-
       <div className="form">
-        <input onChange={handleChange} value={userInput} type="text" />
-        <button onClick={handleClick}>
-          <span> Add </span>
+        <input onChange={handleChange} type="text" value={inputText} />
+        <button onClick={addItem}>
+          <span>Add</span>
         </button>
       </div>
-
       <div>
         <ul>
-          {arrayItem.map(userInput => (
-            <li> {userInput} </li>
+          {items.map(todoItem => (
+            <TodoItem text={todoItem} />
           ))}
         </ul>
       </div>
